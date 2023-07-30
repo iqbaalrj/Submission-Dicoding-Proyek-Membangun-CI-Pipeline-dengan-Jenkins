@@ -1,0 +1,94 @@
+Started by user Dicoding Indonesia
+Obtained Jenkinsfile from git https://github.com/iqbaalrj/a428-cicd-labs
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/submission-cicd-pipeline-iqbaal_rj
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . node:16-buster-slim
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container e1e99e02e06ac32fcf060749261ee326b68097dc606f9a2c3645ff83b073a349
+but /var/jenkins_home/workspace/submission-cicd-pipeline-iqbaal_rj could not be found among []
+but /var/jenkins_home/workspace/submission-cicd-pipeline-iqbaal_rj@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 -p 3000:3000 -w /var/jenkins_home/workspace/submission-cicd-pipeline-iqbaal_rj -v /var/jenkins_home/workspace/submission-cicd-pipeline-iqbaal_rj:/var/jenkins_home/workspace/submission-cicd-pipeline-iqbaal_rj:rw,z -v /var/jenkins_home/workspace/submission-cicd-pipeline-iqbaal_rj@tmp:/var/jenkins_home/workspace/submission-cicd-pipeline-iqbaal_rj@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** node:16-buster-slim cat
+$ docker top 3be85a38f0b45f1644ce3b41a66d220e921b3efecc9f3149832074959547f1f7 -eo pid,comm
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ npm install
+
+added 1 package, changed 1 package, and audited 1915 packages in 35s
+
+186 packages are looking for funding
+  run `npm fund` for details
+
+32 vulnerabilities (1 low, 2 moderate, 20 high, 9 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ ./jenkins/scripts/test.sh
+The following "npm" command (if executed) installs the "cross-env"
+dependency into the local "node_modules" directory, which will ultimately
+be stored in the Jenkins home directory. As described in
+https://docs.npmjs.com/cli/install, the "--save-dev" flag causes the
+"cross-env" dependency to be installed as "devDependencies". For the
+purposes of this tutorial, this flag is not important. However, when
+installing this dependency, it would typically be done so using this
+flag. For a comprehensive explanation about "devDependencies", see
+https://stackoverflow.com/questions/18875674/whats-the-difference-between-dependencies-devdependencies-and-peerdependencies.
++ set +x
+The following "npm" command tests that your simple Node.js/React
+application renders satisfactorily. This command actually invokes the test
+runner Jest (https://facebook.github.io/jest/).
++ npm test
+
+> my-app@0.1.0 test
+> react-scripts test --env=jsdom
+
+PASS src/App.test.js (6.791 s)
+  ✓ renders without crashing (66 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        9.885 s
+Ran all test suites.
+[0;33mOne of your dependencies, babel-preset-react-app, is importing the
+"@babel/plugin-proposal-private-property-in-object" package without
+declaring it in its dependencies. This is currently working because
+"@babel/plugin-proposal-private-property-in-object" is already in your
+node_modules folder for unrelated reasons, but it [1mmay break at any time[0;33m.
+
+babel-preset-react-app is part of the create-react-app project, [1mwhich
+is not maintianed anymore[0;33m. It is thus unlikely that this bug will
+ever be fixed. Add "@babel/plugin-proposal-private-property-in-object" to
+your devDependencies to work around this error. This will make this message
+go away.[0m
+  
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+$ docker stop --time=1 3be85a38f0b45f1644ce3b41a66d220e921b3efecc9f3149832074959547f1f7
+$ docker rm -f 3be85a38f0b45f1644ce3b41a66d220e921b3efecc9f3149832074959547f1f7
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
